@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Rock paper scissors</title>
+    </head>
+    <body>
+        <script>
+
+let userChoice; 
+let computerChoice;
+let userScore = 0;
+let computerScore = 0;
+
+function getComputerChoice() {
+    return Math.floor(Math.random() * 3) + 1;
+}
+
+function game() {
+    userChoice = prompt('Choose your item!')
+    userChoice = userChoice.toLowerCase();
+
+    computerChoice = getComputerChoice();
+    if(computerChoice === 1) {
+        computerChoice = 'rock';
+    } else if(computerChoice === 2) {
+        computerChoice = 'paper';
+    } else if(computerChoice === 3) {
+        computerChoice = 'scissors';
+    } else {
+        console.log('wtf');
+    }
+
+    function playRound() {
+        if(userChoice === 'rock') {
+            if(computerChoice === 'rock') {
+                return 'It is a tie, ';
+            } else if(computerChoice === 'paper') {
+                return 'You lose, ';
+            } else if(computerChoice === 'scissors') {
+                return 'You win, ';
+            } else {
+                return 'wtf';
+            }
+        } else if(userChoice === 'paper') {
+            if(computerChoice === 'rock') {
+                return 'You win, ';
+            } else if(computerChoice === 'paper') {
+                return 'It is a tie, ';
+            } else if(computerChoice === 'scissors') {
+                return 'You lose, ';
+            } else {
+                return 'wtf';
+            }
+        } else if(userChoice === 'scissors') {
+            if(computerChoice === 'rock') {
+                return 'You lose, ';
+            } else if(computerChoice === 'paper') {
+                return 'You win, ';
+            } else if(computerChoice === 'scissors') {
+                return 'It is a tie, ';
+            } else {
+                return 'wtf';
+            }
+        } else {
+            return 'wtf'
+        }
+
+    }
+
+    if(playRound() === "You win, ") {
+        userScore = ++userScore;
+        console.log(playRound() + userChoice + ' vs ' + computerChoice + '. The score is ' + userScore + '/' + computerScore);
+    } else if(playRound() === "It is a tie, ") {
+        console.log(playRound() + userChoice + ' vs ' + computerChoice + '. The score is ' + userScore + '/' + computerScore);
+    } else if(playRound() === "You lose, ") {
+        computerScore = ++computerScore;
+        console.log(playRound() + userChoice + ' vs ' + computerChoice + '. The score is ' + userScore + '/' + computerScore);
+    } else {
+        console.log('Sorry, I don\'t understand what you just wrote. Try again, please');
+    }
+}
+
+for(i = 0; i < 5; i++) {
+    game()
+}
+
+if(userScore > computerScore) {
+    console.log('You won! Congratulations!');
+} else if (userScore < computerScore) {
+    console.log('You lose :( Try again.')
+} else if(userScore === computerScore) {
+    console.log('The game is a tie. Good job.')
+} else {
+    console.log('Sorry, something went wrong.')
+}
+
+        </script>
+    </body>
+</html>
