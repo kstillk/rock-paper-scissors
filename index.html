@@ -5,20 +5,27 @@
         <title>Rock paper scissors</title>
     </head>
     <body>
+        <div>
+            <button id = 'rock'>Rock</button>
+            <button id = 'paper'>Paper</button>
+            <button id = 'scissors'>Scissors</button>
+        </div>
         <script>
-
 let userChoice; 
 let computerChoice;
 let userScore = 0;
 let computerScore = 0;
+let i = 0;
 
 function getComputerChoice() {
     return Math.floor(Math.random() * 3) + 1;
 }
 
-function game() {
-    userChoice = prompt('Choose your item!')
-    userChoice = userChoice.toLowerCase();
+let div = document.querySelector('div');
+div.addEventListener('click', playRound);
+
+function playRound() {
+    userChoice = event.target.id;
 
     computerChoice = getComputerChoice();
     if(computerChoice === 1) {
@@ -27,74 +34,70 @@ function game() {
         computerChoice = 'paper';
     } else if(computerChoice === 3) {
         computerChoice = 'scissors';
-    } else {
-        console.log('wtf');
     }
 
-    function playRound() {
-        if(userChoice === 'rock') {
-            if(computerChoice === 'rock') {
-                return 'It is a tie, ';
-            } else if(computerChoice === 'paper') {
-                return 'You lose, ';
-            } else if(computerChoice === 'scissors') {
-                return 'You win, ';
-            } else {
-                return 'wtf';
-            }
-        } else if(userChoice === 'paper') {
-            if(computerChoice === 'rock') {
-                return 'You win, ';
-            } else if(computerChoice === 'paper') {
-                return 'It is a tie, ';
-            } else if(computerChoice === 'scissors') {
-                return 'You lose, ';
-            } else {
-                return 'wtf';
-            }
-        } else if(userChoice === 'scissors') {
-            if(computerChoice === 'rock') {
-                return 'You lose, ';
-            } else if(computerChoice === 'paper') {
-                return 'You win, ';
-            } else if(computerChoice === 'scissors') {
-                return 'It is a tie, ';
-            } else {
-                return 'wtf';
-            }
-        } else {
-            return 'wtf'
+    if(userChoice === 'rock') {
+        if(computerChoice === 'rock') {
+            roundResult = 'It is a tie, ';
+        } else if(computerChoice === 'paper') {
+            roundResult = 'You lose, ';
+        } else if(computerChoice === 'scissors') {
+            roundResult = 'You win, ';
         }
-
+    } else if(userChoice === 'paper') {
+        if(computerChoice === 'rock') {
+            roundResult = 'You win, ';
+        } else if(computerChoice === 'paper') {
+            roundResult = 'It is a tie, ';
+        } else if(computerChoice === 'scissors') {
+            roundResult = 'You lose, ';
+        }
+    } else if(userChoice === 'scissors') {
+        if(computerChoice === 'rock') {
+            roundResult = 'You lose, ';
+        } else if(computerChoice === 'paper') {
+            roundResult = 'You win, ';
+        } else if(computerChoice === 'scissors') {
+            roundResult = 'It is a tie, ';
+        }
     }
 
-    if(playRound() === "You win, ") {
+    if(roundResult === "You win, ") {
         userScore = ++userScore;
-        console.log(playRound() + userChoice + ' vs ' + computerChoice + '. The score is ' + userScore + '/' + computerScore);
-    } else if(playRound() === "It is a tie, ") {
-        console.log(playRound() + userChoice + ' vs ' + computerChoice + '. The score is ' + userScore + '/' + computerScore);
-    } else if(playRound() === "You lose, ") {
+        let para = document.createElement('p');
+        para.textContent = roundResult + userChoice + ' vs ' + computerChoice + '. The score is ' + userScore + '/' + computerScore;
+        div.appendChild(para);
+    } else if(roundResult === "It is a tie, ") {
+        let para = document.createElement('p');
+        para.textContent = roundResult + userChoice + ' vs ' + computerChoice + '. The score is ' + userScore + '/' + computerScore;
+        div.appendChild(para);
+    } else if(roundResult === "You lose, ") {
         computerScore = ++computerScore;
-        console.log(playRound() + userChoice + ' vs ' + computerChoice + '. The score is ' + userScore + '/' + computerScore);
-    } else {
-        console.log('Sorry, I don\'t understand what you just wrote. Try again, please');
+        let para = document.createElement('p');
+        para.textContent = roundResult + userChoice + ' vs ' + computerChoice + '. The score is ' + userScore + '/' + computerScore;
+        div.appendChild(para);
     }
-}
 
-for(i = 0; i < 5; i++) {
-    game()
-}
+    i++
 
-if(userScore > computerScore) {
-    console.log('You won! Congratulations!');
-} else if (userScore < computerScore) {
-    console.log('You lose :( Try again.')
-} else if(userScore === computerScore) {
-    console.log('The game is a tie. Good job.')
-} else {
-    console.log('Sorry, something went wrong.')
-}
+    if (i > 4) {
+        div.removeEventListener('click', playRound);
 
+        if(userScore > computerScore) {
+            let finalPara = document.createElement('p');
+            finalPara.textContent = 'You win! Congratulations!';
+            div.appendChild(finalPara);
+        } else if (userScore < computerScore) {
+            let finalPara = document.createElement('p');
+            finalPara.textContent = 'You lose :( Try again.';
+            div.appendChild(finalPara);
+        } else if(userScore === computerScore) {
+            let finalPara = document.createElement('p');
+            finalPara.textContent = 'The game is a tie. Good job.';
+            div.appendChild(finalPara);
+        } 
+    } 
+}   
         </script>
     </body>
 </html>
